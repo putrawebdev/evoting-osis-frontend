@@ -20,46 +20,39 @@ export const Route = createFileRoute("/pilih")({
 });
 
 function PilihPage() {
-  const nisn = useStore((s) => s.currentNisn);
-  
-  // Karena student name didapat saat login (disimpan di store atau localStorage), kita buat state manual:
+  // Ambil data student langsung dari localStorage yang dikirim saat login
   const [student, setStudent] = useState<{nisn: string, name: string, kelas?: string} | null>(null);
-  
-  // State untuk menyimpan data kandidat dari Laravel
   const [candidates, setCandidates] = useState<Candidate[]>([]);
-  const electionName = "Pemilihan Ketua OSIS SMK Metland"; // Bisa di-hardcode atau ditarik dari API juga
+  const electionName = "Pemilihan Ketua OSIS SMK Metland";
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [flippedCandidateIds, setFlippedCandidateIds] = useState<Set<string>>(() => new Set());
   const [confirm, setConfirm] = useState<Candidate | null>(null);
-  // Fungsi untuk menarik data kandidat dari Laravel saat halaman dimuat
+
   useEffect(() => {
-    // Memastikan user sudah login
-    if (!nisn) {
+    // Ambil data student dari localStorage
+    const rawStudent = localStorage.getItem("current_student");
+    if (!rawStudent) {
+      // Jika belum login/tidak ada data, tendang ke login
       navigate({ to: "/login" });
       return;
     }
-
-    // Ambil data student dari localStorage yang kita set di login (opsional)
-    // Atau ambil dari store yang sudah dimodifikasi
-    const rawStudent = localStorage.getItem("current_student");
-    if(rawStudent) setStudent(JSON.parse(rawStudent));
+    
+    const parsedStudent = JSON.parse(rawStudent);
+    setStudent(parsedStudent);
 
     const fetchKandidat = async () => {
       try {
         const response = await fetch("http://192.168.10.103:8000/api/kandidat");
         const data = await response.json();
         
-        // Memastikan format data Laravel (misi & program) berupa array
-        // agar tidak membuat React Error saat me-render list
         const formattedCandidates = data.data.map((c: any) => ({
-            id: String(c.id), // Laravel pakai id int, React minta string
+            id: String(c.id),
             number: c.no_paslon,
             ketua: c.nama_ketua,
             wakil: c.nama_wakil,
-            photo: `http://192.168.10.103:8000/storage/${c.foto}`, // URL lengkap gambar
+            photo: `http://192.168.10.103:8000/storage/${c.foto}`,
             visi: c.visi,
-            // Jika misi dari Laravel berupa string panjang (contoh: "1. A\n2. B"), kita ubah jadi array
             misi: typeof c.misi === 'string' ? c.misi.split('\n').filter(Boolean) : c.misi,
             program: typeof c.proggram === 'string' ? c.proggram.split('\n').filter(Boolean) : c.proggram
         }));
@@ -73,20 +66,15 @@ function PilihPage() {
     };
 
     fetchKandidat();
-  }, [nisn, navigate]);
-
+  }, [navigate]);
   const toggleCandidate = (candidateId: string) => {
-    setFlippedCandidateIds((current) => {
-      const next = new Set(current);
-      if (next.has(candidateId)) next.delete(candidateId);
-      else next.add(candidateId);
-      return next;
-    });
-  };
-
-  useEffect(() => {
-    if (!nisn) navigate({ to: "/login" });
-  }, [nisn, navigate]);
+      setFlippedCandidateIds((current) => {
+        const next = new Set(current);
+        if (next.has(candidateId)) next.delete(candidateId);
+        else next.add(candidateId);
+        return next;
+      });
+    };
   if (!student) return null;
 
   const vote = async () => {
@@ -140,7 +128,7 @@ function PilihPage() {
           <h1 className="mt-1 text-2xl font-extrabold tracking-tight sm:text-4xl">{electionName}</h1>
           <p className="mt-2 text-sm text-muted-foreground sm:text-base">Pilih salah satu pasangan calon. Pilihan tidak dapat diubah.</p>
         </div>
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto grid max-w-3xl grid-cols-1 gap-6 sm:grid-cols-2">
           {candidates.map((c, i) => (
             <motion.article key={c.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}
               role="group" aria-label={`Paslon ${c.number}: ${c.ketua} dan ${c.wakil}`} tabIndex={0}
@@ -158,7 +146,7 @@ function PilihPage() {
               className="group h-full cursor-pointer overflow-hidden rounded-2xl border bg-card shadow-card transition-shadow hover:shadow-elegant focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring [perspective:1200px]">
               <motion.div className="grid h-full" animate={{ rotateY: flippedCandidateIds.has(c.id) ? 180 : 0 }} transition={{ duration: 0.65, ease: "easeInOut" }} style={{ transformStyle: "preserve-3d" }}>
                 <div className="flex h-[26rem] flex-col [grid-area:1/1] [backface-visibility:hidden] sm:h-[calc(32rem_+_2px)]">
-                  <div className="relative aspect-[16/10] overflow-hidden bg-muted">
+                  <div className="relative aspect-[4/4] overflow-hidden bg-muted">
                     <img src={c.photo} alt={`${c.ketua} dan ${c.wakil}`} width={816} height={1000} loading="lazy" className="h-full w-full object-cover object-[center_20%] transition-transform duration-500 group-hover:scale-105" />
                     <span className="absolute left-4 top-4 rounded-md bg-card/95 px-3 py-1.5 text-xs font-bold text-foreground shadow-card">Paslon {String(c.number).padStart(2, "0")}</span>
                     <span className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-md bg-card/95 px-3 py-1.5 text-xs font-semibold text-primary shadow-card">

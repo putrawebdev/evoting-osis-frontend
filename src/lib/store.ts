@@ -1,7 +1,7 @@
 import { useSyncExternalStore } from "react";
-import p1 from "@/assets/paslon-1.jpeg";
-import p2 from "@/assets/paslon-2.jpeg";
-import p3 from "@/assets/paslon-3.jpeg";
+import p1 from "@/assets/paslon-1.png";
+import p2 from "@/assets/paslon-2.png";
+// import p3 from "@/assets/paslon-3.jpeg";
 
 export type ElectionStatus = "Draft" | "Berlangsung" | "Selesai";
 export interface Candidate {
@@ -65,16 +65,15 @@ candidates: [
   {
     id: "c1",
     number: 1,
-    ketua: "Naufal Vianza Ziggy Puta",
-    wakil: "Esti Anamarie Simanjuntak",
+    ketua: "Alfian Nadya Dewanti (Kelas 8.7)",
+    wakil: "Nur Aisyah Mulyani (Kelas 8.4)",
     photo: p1,
-    visi: "Mewujudkan OSIS SMPN 1 Cibitung menjadi organisasi yang aktif dalam lingkungan sekolah maupun media sosial, informatif, dan mampu mewadahi potensi siswa/siswi khususnya dalam bidang non akademik demi mencapai siswa/siswi yang kreatif, berprestasi, berkepribadian baik, serta memiliki kepedulian terhadap lingkungan sekitar.",
+    visi: "Mewujudkan OSIS SMPN 5 Cibitung sebagai organisasi yang unggul dan wadah bagi siswa untuk menjadi pribadi yang SMART (Sopan, Mandiri, Aktif, Rajin, dan Terampil) Berprestasi, peduli lingkungan, serta berwawasan luas.",
     misi: [
-      "Membangun hubungan dan komunikasi yang baik antara OSIS dengan warga sekolah maupun dengan organisasi atau ekstrakurikuler yang ada di SMPN 1 Cibitung.",
-      "Menyelenggarakan kegiatan yang dapat mengembangkan potensi dan bakat siswa.",
-      "Meningkatkan kesadaran siswa/i tentang pentingnya berpakaian rapi, serta berperilaku dan bertata krama baik demi terciptanya lingkungan sekolah yang harmonis dan tentram.",
-      "Meningkatkan kesadaran siswa/i akan pentingnya menjaga lingkungan sekitar dan mengurangi sampah yang ada di lingkungan sekolah.",
-      "Mengevaluasi kegiatan osis periode sebelumnya, serta melanjutkan dan membaharui program kerja yang telah dilakukan oleh osis periode sebelumnya."
+      "Menjadi wadah bagi siswa untuk menyampaikan aspirasi, ide, dan pendapat secara terbuka dan bertanggung jawab.",
+      "Mengadakan program kerja yang kreatif, relevan, dan berdampak nyata.",
+      "Mendorong siswa untuk mengembangkan potensi, kreativitas, dan rasa percaya diri melalui kegiatan yang positif dan inspiratif.",
+      "Membuka wawasan siswa terhadap budaya, teknologi, dan perkembangan global tanpa meninggalkan budaya Indonesia.",
     ],
     program: [
       "Bank Sampah: Program ini bertujuan untuk menanggulangi krisis sampah plastik di sekolah. Mengumpulkan gelas plastik, botol plastik, dan galon tekonan daur ulang, serta mengurangi volume sampah plastik dan meningkatkan kepedulian lingkungan.",
@@ -86,16 +85,15 @@ candidates: [
   {
     id: "c2",
     number: 2,
-    ketua: "Ranida Orfa Dhani",
-    wakil: "Jihan SSahfara Nisa Salsabila",
+    ketua: "Vanessa Tridiyani (Kelas 8.1)",
+    wakil: "Zahra Nur Rohmah (Kelas 8.4)",
     photo: p2,
-    visi: "Menjadikan OSIS SMPN 1 Cibitung sebagai organisasi yang menonjolkan sikap keagamaan, peningkatan kualitas siswa melalui ekstrakurikuler akademik maupun non akademik, penggunaan media sosial dengan bijak, meningkatkan komunikasi kepada siswa, serta kepedulian terhadap lingkungan. Dan menjadi organisasi yang unggul, mampu bertanggung jawab, mandiri, dan meningkatkan kegiatan olahraga sebagai wadah untuk meningkatkan kesehatan dan kebugaran siswa.",
+    visi: "Menjadikan OSIS SMPN 5 Cibitung sebagai wadah yang aktif dan inklusif untuk mewujudkan siswa yang beriman, cerdas, peduli lingkungan, serta bebas dari bullying.",
     misi: [
-      "Mengutamakan nilai keimanan yang maha Esa sebagai landasan dalam menjalankan kegiatan, guna meningkatkan ketakwaan dan ketaqwaan siswa.",
-      "Mengoptimalkan ekstrakurikuler yang ada di SMP Negeri 1 Cibitung, sehingga dapat meningkatkan minat dan bakat siswa.",
-      "Mengoptimalkan peran media sosial untuk menunjang kegiatan sekolah.",
-      "Membangun komunikasi yang efektif antara siswa dengan pengurus OSIS untuk menerima masukan ide dan saran.",
-      "Mengutamakan kebersihan lingkungan agar terciptanya lingkungan yang bersih, indah dan sehat."
+      "Meningkatkan keimanan, ketakwaan, dan akhlak siswa.",
+      "Mengembangkan kreativitas dan bakat akademik maupun non-akademik.",
+      "Meningkatkan kepedulian terhadap kebersihan dan lingkungan sekolah.",
+      "Menciptakan lingkungan sekolah yang aman, harmonis, dan bebas bullying.",
     ],
     program: [
       "Melanjutkan dan mengembangkan program kerja sebelumnya: seperti maulid nabi, classmeeting, lomba perayaan hari kemerdekaan Indonesia, dll.",
@@ -105,26 +103,6 @@ candidates: [
       "Melaksanakan kegiatan olahraga rutin maupun pada Hari Olahraga Nasional atau pun classmeeting."
     ]
   },
-  {
-    id: "c3",
-    number: 3,
-    ketua: "Oonita Aqila Hananisa",
-    wakil: "Safira Putri",
-    photo: p3,
-    visi: "Mewujudkan OSIS SMPN 1 Cibitung yang menginspirasi, aktif, dan aspiratif serta memiliki komunikasi efektif antar anggota agar terwujudnya siswa/i yang berbudi luhur dan disiplin serta mampu mengembangkan minat, bakat, dan kreativitas siswa/i.",
-    misi: [
-      "Mendengarkan dan memperjuangkan segala bentuk aspirasi siswa/i baik dalam kelas maupun diluar kelas.",
-      "Membangun komunikasi yang efektif antara siswa, guru, dan pihak sekolah.",
-      "Menciptakan suasana organisasi yang tanggung jawab terhadap tugas yang diemban.",
-      "Menumbuhkan kesadaran siswa/i untuk menerapkan nilai-nilai Pancasila, sopan santun, dan disiplin dalam kehidupan sehari-hari di sekolah.",
-      "Mengadakan iven yang menarik serta berguna untuk mengasah minat dan bakat siswa/i."
-    ],
-    program: [
-      "FOSAST (Forum Suara Siswa): Program kerja ini diisi dengan menyalurkan suara aspirasi seperti Kotak Kosong yang akan diisi dengan aspirasi-aspirasi siswa/i. Tujuannya: Agar siswa/i dapat menyampaikan aspirasinya.",
-      "Menyediakan Mading Mading: Program kerja ini, kami akan berkolaborasi dengan Tim Literasi. Tujuannya: Untuk menarik, mendorong kreativitas siswa/i melalui mading serta mengembangkan minat dan bakat siswa/i di bidang seni.",
-      "Mengadakan Tika Pancasila di Hari Besar Nasional: Program ini akan dilanjutkan di setiap ada hari besar nasional. Tujuannya: Menumbuhkan kesadaran nilai-nilai Pancasila bukan kehidupan sehari-hari, menumbuhkan rasa cinta tanah air, serta memperingati kebersamaan."
-    ]
-  }
 ],
     students,
     history,
