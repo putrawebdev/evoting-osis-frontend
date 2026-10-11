@@ -1,0 +1,184 @@
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
+import { motion } from "motion/react";
+import { AlertCircle, ArrowRight, CalendarClock } from "lucide-react";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Logo, StatusBadge } from "@/components/shared";
+import { checkNisn, getState, setState, useStore, fmtTime, type Candidate } from "@/lib/store";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import loginBackground from "@/assets/mc.jpg";
+import welcomeImage from "@/assets/popup-smk-metland.png";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+
+export const Route = createFileRoute("/login")({
+  head: () => ({
+    meta: [
+      { title: "Masuk Pemilih — E-Voting OSIS" },
+      { name: "description", content: "Masukkan NISN Anda untuk memberikan suara pada pemilihan Ketua OSIS." },
+      { property: "og:title", content: "Masuk Pemilih — E-Voting OSIS" },
+      { property: "og:description", content: "Masukkan NISN Anda untuk memberikan suara." },
+    ],
+  }),
+  component: LoginPage,
+});
+
+export function LoginPage() {
+  const election = useStore((s) => s.election);
+  const candidates = useStore((s) => s.candidates);
+  const [nisn, setNisn] = useState("");
+  const [error, setError] = useState<{ msg: string; voted: boolean } | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(false);
+  const [posterIndex, setPosterIndex] = useState<number | null>(null);
+  const poster = posterIndex === null ? null : candidates[posterIndex] ?? null;
+  const navigate = useNavigate();
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+
+    try {
+      // 1. Tembak data ke Laravel
+      const response = await fetch("http://192.168.10.103:8000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+        body: JSON.stringify({ nisn: nisn }),
+      });
+
+      // 2. Ambil balasan dari Laravel ke dalam variabel "data"
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError({ 
+          msg: data.message || "Gagal masuk, periksa kembali NISN Anda.", 
+          voted: data.reason === "voted" 
+        });
+        setLoading(false);
+        return;
+      }
+
+      // 3. Simpan data siswa jika sukses
+      setState((s) => ({ ...s, currentNisn: data.student.nisn }));
+      localStorage.setItem("current_student", JSON.stringify(data.student));
+      
+      toast.success(`Selamat datang, ${data.student.name}`);
+      navigate({ to: "/pilih" });
+
+    } catch (err) {
+      setError({ msg: "Tidak dapat terhubung ke server backend.", voted: false });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden p-3 sm:p-6">
+      <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${loginBackground})` }} aria-hidden="true" />
+      <div className="absolute inset-0 bg-black/60" aria-hidden="true" />
+
+      <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="relative z-10 w-full max-w-2xl overflow-hidden rounded-[24px] border border-emerald-200/80 bg-white/96 p-4 shadow-[0_22px_60px_rgba(0,168,150,0.18)] backdrop-blur-sm sm:rounded-[28px] sm:p-7">
+        <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-hero" aria-hidden="true" />
+        <header className="-mx-5 -mt-5 mb-5 border-b border-emerald-100 bg-gradient-to-br from-emerald-50 via-white to-teal-50 px-5 pb-4 pt-6 sm:-mx-7 sm:-mt-7 sm:px-7 sm:pb-5 sm:pt-7">
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <Logo />
+              <p className="mt-5 text-[11px] font-bold uppercase tracking-[0.12em] text-primary">Suara siswa, perubahan nyata</p>
+              <h1 className="mt-1 text-2xl font-extrabold leading-tight text-slate-900">{election.name}</h1>
+              <p className="mt-1 text-sm text-slate-600">Suara Anda Menentukan Arah Organisasi</p>
+            </div>
+            <StatusBadge status={election.status} />
+          </div>
+          <p className="mt-4 flex items-center gap-2 border-t border-emerald-200/70 pt-3 text-xs text-slate-600"><CalendarClock className="h-3.5 w-3.5 text-primary" />{fmtTime(election.start)} – {fmtTime(election.end)}</p>
+        </header>
+
+        <section className="mt-4 rounded-2xl border border-emerald-100 bg-emerald-50/60 p-3">
+          <h2 className="text-sm font-bold text-slate-800">Cara memulai pemilihan</h2>
+          <ol className="mt-2 grid gap-2 text-xs sm:grid-cols-3">
+            <li className="flex items-start gap-2 rounded-xl bg-white p-2.5 shadow-sm"><span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-primary font-bold text-white">1</span><span><strong className="block text-slate-800">Lihat paslon</strong><span className="text-slate-600">Ketuk poster untuk melihat detail.</span></span></li>
+            <li className="flex items-start gap-2 rounded-xl bg-white p-2.5 shadow-sm"><span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-primary font-bold text-white">2</span><span><strong className="block text-slate-800">Masukkan NISN</strong><span className="text-slate-600">Gunakan NISN yang terdaftar.</span></span></li>
+            <li className="flex items-start gap-2 rounded-xl bg-white p-2.5 shadow-sm"><span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-primary font-bold text-white">3</span><span><strong className="block text-slate-800">Mulai memilih</strong><span className="text-slate-600">Tekan lanjut untuk masuk.</span></span></li>
+          </ol>
+        </section>
+
+        <section className="mt-5">
+          <div className="flex flex-wrap items-baseline justify-between gap-1">
+            <h2 className="text-sm font-bold text-slate-800">Kenali pasangan calon</h2>
+            <p className="text-xs text-slate-600">Pilih poster untuk melihat lebih jelas</p>
+          </div>
+          <div className="mt-2 grid grid-cols-1 gap-3 sm:grid-cols-3">
+            {candidates.map((candidate, index) => (
+              <button key={candidate.id} type="button" onClick={() => setPosterIndex(index)} aria-label={`Lihat poster paslon ${candidate.number}`} className="group min-w-0 cursor-pointer rounded-2xl border border-emerald-100 bg-white p-2 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                <img src={candidate.photo} alt={`${candidate.ketua} dan ${candidate.wakil}`} className="aspect-[4/3] w-full rounded-xl object-cover object-[center_20%] transition group-hover:brightness-95" />
+                <span className="mt-2 block truncate text-xs font-semibold text-slate-800">Paslon {candidate.number}</span>
+                <span className="block truncate text-xs text-slate-600">{candidate.ketua}</span>
+              </button>
+            ))}
+          </div>
+        </section>
+
+        <form onSubmit={submit} className="mt-5 space-y-3 rounded-2xl border border-emerald-100 bg-emerald-50/60 p-4">
+          <div>
+            <label htmlFor="nisn" className="mb-2 block text-sm font-semibold text-slate-800">NISN</label>
+            <Input id="nisn" inputMode="numeric" maxLength={10} value={nisn} placeholder="Masukkan NISN 10 digit"
+              onChange={(e) => { setNisn(e.target.value.replace(/\D/g, "")); setError(null); }}
+              className="h-12 rounded-xl border-emerald-200 bg-emerald-50/40 text-base text-slate-800 placeholder:text-slate-400" aria-invalid={!!error} />
+          </div>
+          {error && (
+            <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} role="alert" className="flex gap-3 rounded-lg bg-destructive-soft p-3 text-sm text-destructive">
+              <AlertCircle className="h-5 w-5 shrink-0" />
+              <div><p className="font-semibold">{error.voted ? "Akses ditolak" : "Tidak dapat masuk"}</p><p>{error.msg}</p></div>
+            </motion.div>
+          )}
+          <Button type="submit" variant="hero" size="xl" className="w-full" disabled={loading}>
+            {loading ? "Memeriksa..." : <>Lanjut memilih <ArrowRight /></>}
+          </Button>
+        </form>
+        <p className="mt-3 text-center text-xs text-muted-foreground">
+          <Link to="/admin/login" className="font-semibold text-primary hover:text-primary/80 hover:underline">Masuk sebagai admin</Link>
+        </p>
+      </motion.div>
+
+      <Dialog open={posterIndex !== null} onOpenChange={(open) => !open && setPosterIndex(null)}>
+        <DialogContent className="max-h-[92vh] overflow-y-auto sm:max-w-3xl">
+          {poster && <>
+            <DialogHeader>
+              <DialogTitle>Poster pasangan calon</DialogTitle>
+              <DialogDescription>Geser poster atau gunakan panah untuk melihat paslon lainnya.</DialogDescription>
+            </DialogHeader>
+            <Carousel key={posterIndex} opts={{ loop: true, startIndex: posterIndex ?? 0 }} className="mx-7 sm:mx-10">
+              <CarouselContent>
+                {candidates.map((candidate) => (
+                  <CarouselItem key={candidate.id}>
+                    <img src={candidate.photo} alt={`Poster paslon ${candidate.number}: ${candidate.ketua} dan ${candidate.wakil}`} className="mx-auto max-h-[70vh] w-full object-contain" />
+                    <p className="mt-2 text-center text-sm font-semibold">Paslon {candidate.number} · {candidate.ketua} & {candidate.wakil}</p>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious aria-label="Poster sebelumnya" className="left-0" />
+              <CarouselNext aria-label="Poster berikutnya" className="right-0" />
+            </Carousel>
+          </>}
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showWelcome} onOpenChange={setShowWelcome}>
+        <DialogContent className="max-h-[92vh] overflow-y-auto p-3 sm:max-w-4xl sm:p-5">
+          <DialogHeader>
+            <DialogTitle>SMK Metland Cibitung</DialogTitle>
+            <DialogDescription>Informasi Penerimaan Murid Baru Tahun Pelajaran 2026–2027.</DialogDescription>
+          </DialogHeader>
+          <img src={welcomeImage} alt="Informasi Penerimaan Murid Baru SMK Metland Cibitung Tahun Pelajaran 2026–2027" className="max-h-[68vh] w-full rounded-md bg-white object-contain" />
+          <DialogFooter>
+            <Button variant="hero" size="xl" className="w-full" onClick={() => setShowWelcome(false)}>Lanjut ke Login</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}

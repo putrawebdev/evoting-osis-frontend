@@ -1,0 +1,136 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system definition.
+ *
+ * The @theme inline block maps CSS custom properties to Tailwind utility
+ * classes (e.g. --color-primary -> bg-primary, text-primary).
+ *
+ * The :root and .dark blocks define the actual color values using oklch.
+ * All colors MUST use oklch format.
+ *
+ * To add a new semantic color:
+ * 1. Add the variable to :root (light value) and .dark (dark value)
+ * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-primary-glow: var(--primary-glow);
+  --color-accent-soft: var(--accent-soft);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-success-soft: var(--success-soft);
+  --color-destructive-soft: var(--destructive-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --shadow-elegant: var(--shadow-elegant);
+  --shadow-card: var(--shadow-card);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.875rem;
+  --background: #f7fffd;
+  --foreground: #1d2b2a;
+  --card: #ffffff;
+  --card-foreground: #1d2b2a;
+  --popover: #ffffff;
+  --popover-foreground: #1d2b2a;
+  --primary: #00A896;
+  --primary-foreground: #ffffff;
+  --primary-glow: #00D2A0;
+  --secondary: #eafbf7;
+  --secondary-foreground: #0d564d;
+  --muted: #f2fbf9;
+  --muted-foreground: #4b5d5a;
+  --accent: #7a1d20;
+  --accent-foreground: #ffffff;
+  --accent-soft: #fef1f2;
+  --success: #00A896;
+  --success-foreground: #ffffff;
+  --success-soft: #eafbf7;
+  --destructive: #7a1d20;
+  --destructive-foreground: #ffffff;
+  --destructive-soft: #fdf2f3;
+  --warning: #00D2A0;
+  --warning-soft: #edfdf6;
+  --border: #d7efe9;
+  --input: #dff7f1;
+  --ring: #00A896;
+  --chart-1: #00A896;
+  --chart-2: #7a1d20;
+  --chart-3: #00D2A0;
+  --chart-4: #0d564d;
+  --chart-5: #8ae2cd;
+  --sidebar: #0f172a;
+  --sidebar-foreground: #f8fafc;
+  --sidebar-primary: #00D2A0;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #7a1d20;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #294a46;
+  --sidebar-ring: #00D2A0;
+  --gradient-hero: linear-gradient(135deg, var(--primary), var(--primary-glow));
+  --shadow-elegant: 0 12px 32px -12px color-mix(in srgb, var(--primary) 40%, transparent);
+  --shadow-card: 0 1px 2px color-mix(in srgb, var(--foreground) 6%, transparent), 0 8px 24px -16px color-mix(in srgb, var(--primary) 25%, transparent);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+}
+
+@utility bg-gradient-hero {
+  background-image: var(--gradient-hero);
+}
