@@ -159,7 +159,7 @@ function PilihPage() {
               <motion.div className="grid h-full" animate={{ rotateY: flippedCandidateIds.has(c.id) ? 180 : 0 }} transition={{ duration: 0.65, ease: "easeInOut" }} style={{ transformStyle: "preserve-3d" }}>
                 <div className="flex h-[26rem] flex-col [grid-area:1/1] [backface-visibility:hidden] sm:h-[calc(32rem_+_2px)]">
                   <div className="relative aspect-[16/10] overflow-hidden bg-muted">
-                    <img src={c.photo} alt={`${c.ketua} dan ${c.wakil}`} width={816} height={816} loading="lazy" className="h-full w-full object-cover object-[center_20%] transition-transform duration-500 group-hover:scale-105" />
+                    <img src={c.photo} alt={`${c.ketua} dan ${c.wakil}`} width={816} height={1000} loading="lazy" className="h-full w-full object-cover object-[center_20%] transition-transform duration-500 group-hover:scale-105" />
                     <span className="absolute left-4 top-4 rounded-md bg-card/95 px-3 py-1.5 text-xs font-bold text-foreground shadow-card">Paslon {String(c.number).padStart(2, "0")}</span>
                     <span className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-md bg-card/95 px-3 py-1.5 text-xs font-semibold text-primary shadow-card">
                       <MousePointerClick className="h-3.5 w-3.5" /> Lihat detail

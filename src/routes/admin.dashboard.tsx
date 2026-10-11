@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
+import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid, Cell } from "recharts";
 import { CheckCircle2, UserX, Users, UsersRound } from "lucide-react";
 import { MetricCard, PageHeader, card } from "@/components/shared";
 
@@ -62,36 +62,39 @@ export function Dashboard() {
         <div className="mt-3 h-3 overflow-hidden rounded-full bg-muted"><div className="h-full rounded-full bg-gradient-hero transition-all duration-700" style={{ width: `${pct}%` }} /></div>
       </div>
 
-      <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-5">
+      <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-6">
         
-        {/* BAGIAN KIRI: PIE CHART KANDIDAT */}
-        <div className={`${card} p-5 lg:col-span-3`}>
-          <p className="font-semibold">Perolehan suara</p>
-          <div className="mt-4 grid items-center gap-6 sm:grid-cols-2">
-            <div className="relative h-64">
-              <ResponsiveContainer>
-                <PieChart>
-                  <Pie data={data} dataKey="value" innerRadius="62%" outerRadius="90%" paddingAngle={3} stroke="none"
-                    onMouseEnter={(_, i) => setActive(i)} onMouseLeave={() => setActive(null)}>
-                    {data.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} opacity={active === null || active === i ? 1 : 0.35} />)}
-                  </Pie>
-                  <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid var(--border)" }} />
-                </PieChart>
-              </ResponsiveContainer>
-              <div className="pointer-events-none absolute inset-0 grid place-items-center text-center">
-                <div><p className="text-3xl font-extrabold">{active === null ? voted : data[active]?.value}</p><p className="text-xs text-muted-foreground">{active === null ? "total suara" : data[active]?.name}</p></div>
-              </div>
-            </div>
-            <ul className="space-y-3">
-              {data.map((d, i) => (
-                <li key={d.name} onMouseEnter={() => setActive(i)} onMouseLeave={() => setActive(null)} className="flex items-center gap-3 rounded-xl p-2 transition-colors hover:bg-muted">
-                  <span className="h-3 w-3 shrink-0 rounded-full" style={{ background: COLORS[i] }} />
-                  <div className="min-w-0 flex-1"><p className="text-sm font-semibold">{d.name}</p><p className="truncate text-xs text-muted-foreground">{d.full}</p></div>
-                  <p className="text-sm font-bold">{d.value} <span className="font-normal text-muted-foreground">({voted ? Math.round((d.value / voted) * 100) : 0}%)</span></p>
-                </li>
-              ))}
-            </ul>
+        {/* BAGIAN KIRI: BAR CHART KANDIDAT (BALOK) */}
+        <div className={`${card} p-5 lg:col-span-4`}>
+          <p className="font-semibold mb-4">Perolehan suara</p>
+          <div className="h-72 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
+                <XAxis dataKey="name" stroke="var(--muted-foreground)" fontSize={12} tickLine={false} />
+                <YAxis stroke="var(--muted-foreground)" fontSize={12} tickLine={false} allowDecimals={false} />
+                <Tooltip 
+                  cursor={{ fill: 'var(--muted)' }}
+                  contentStyle={{ borderRadius: 12, border: "1px solid var(--border)", backgroundColor: "var(--background)" }} 
+                />
+                <Bar dataKey="value" radius={[6, 6, 0, 0]}>
+                  {data.map((_, i) => (
+                    <Cell key={i} fill={COLORS[i % COLORS.length]} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
           </div>
+          {/* Keterangan detail nama paslon di bawah chart */}
+          <ul className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-3">
+            {data.map((d, i) => (
+              <li key={d.name} className="flex items-center gap-2 rounded-lg p-2 bg-muted/50 text-xs">
+                <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: COLORS[i] }} />
+                <span className="font-semibold">{d.name}:</span>
+                <span className="truncate text-muted-foreground">{d.full}</span>
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* BAGIAN KANAN: PARTISIPASI PER KELAS */}
@@ -99,7 +102,6 @@ export function Dashboard() {
           <p className="font-semibold">Partisipasi per kelas</p>
           <ul className="mt-4 max-h-[320px] space-y-4 overflow-y-auto pr-2">
             {stats.kelas.map((k, idx) => {
-              // Hitung persentase suara per kelas
               const p = k.total_siswa > 0 ? Math.round((k.sudah_memilih / k.total_siswa) * 100) : 0;
               return (
                 <li key={idx}>

@@ -30,7 +30,7 @@ export function LoginPage() {
   const [nisn, setNisn] = useState("");
   const [error, setError] = useState<{ msg: string; voted: boolean } | null>(null);
   const [loading, setLoading] = useState(false);
-  const [showWelcome, setShowWelcome] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(true);
   const [posterIndex, setPosterIndex] = useState<number | null>(null);
   const poster = posterIndex === null ? null : candidates[posterIndex] ?? null;
   const navigate = useNavigate();
@@ -80,7 +80,7 @@ export function LoginPage() {
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden p-3 sm:p-6">
       <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${loginBackground})` }} aria-hidden="true" />
-      <div className="absolute inset-0 bg-black/60" aria-hidden="true" />
+      <div className="absolute inset-0 bg-black/60" aria-hidden="false" />
 
       <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="relative z-10 w-full max-w-2xl overflow-hidden rounded-[24px] border border-emerald-200/80 bg-white/96 p-4 shadow-[0_22px_60px_rgba(0,168,150,0.18)] backdrop-blur-sm sm:rounded-[28px] sm:p-7">
         <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-hero" aria-hidden="true" />
