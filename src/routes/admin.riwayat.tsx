@@ -21,7 +21,7 @@ function RiwayatPage() {
   // Mengambil data riwayat dari MySQL
   const fetchRiwayat = async () => {
     try {
-      const response = await fetch("http://192.168.10.103:8000/api/admin/riwayat");
+      const response = await fetch("http://localhost:8000/api/admin/riwayat");
       const data = await response.json();
       if (data.status === 'success') {
         setHistory(data.data);

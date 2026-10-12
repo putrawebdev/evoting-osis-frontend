@@ -29,7 +29,7 @@ export function LoginPage() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://192.168.10.103:8000/api/login", {
+      const response = await fetch("http://localhost:8000/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -43,7 +43,7 @@ function PilihPage() {
 
     const fetchKandidat = async () => {
       try {
-        const response = await fetch("http://192.168.10.103:8000/api/kandidat");
+        const response = await fetch("http://localhost:8000/api/kandidat");
         const data = await response.json();
         
         const formattedCandidates = data.data.map((c: any) => ({
@@ -51,7 +51,7 @@ function PilihPage() {
             number: c.no_paslon,
             ketua: c.nama_ketua,
             wakil: c.nama_wakil,
-            photo: `http://192.168.10.103:8000/storage/${c.foto}`,
+            photo: `http://localhost:8000/storage/${c.foto}`,
             visi: c.visi,
             misi: typeof c.misi === 'string' ? c.misi.split('\n').filter(Boolean) : c.misi,
             program: typeof c.proggram === 'string' ? c.proggram.split('\n').filter(Boolean) : c.proggram
@@ -82,7 +82,7 @@ function PilihPage() {
     
     try {
       // PASTIKAN URL INI MENGGUNAKAN IP KAMU, BUKAN LOCALHOST
-      const response = await fetch("http://192.168.10.103:8000/api/vote", {
+      const response = await fetch("http://localhost:8000/api/vote", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
