@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Logo } from "@/components/shared";
 import { castVote, setState, useStore, type Candidate } from "@/lib/store";
 import { API_URL } from "@/lib/api";
-
+//haii
 export const Route = createFileRoute("/pilih")({
   head: () => ({
     meta: [
