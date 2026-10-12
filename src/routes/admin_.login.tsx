@@ -33,7 +33,7 @@ function AdminLogin() {
     
     setLoading(true);
     try {
-      const response = await fetch("https://evoting-osis-backend.wasmer.appapi/admin/login", {
+      const response = await fetch("https://evoting-osis-backend.wasmer.app/api/admin/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
