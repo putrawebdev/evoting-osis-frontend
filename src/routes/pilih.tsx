@@ -44,7 +44,7 @@ function PilihPage() {
 
     const fetchKandidat = async () => {
       try {
-        const response = await fetch("${API_URL}/api/kandidat");
+        const response = await fetch("https://evoting-osis-backend.wasmer.app/api/kandidat");
         const data = await response.json();
         
         const formattedCandidates = data.data.map((c: any) => ({
@@ -52,7 +52,7 @@ function PilihPage() {
     number: c.no_paslon,
     ketua: c.nama_ketua,
     wakil: c.nama_wakil,
-    photo: c.foto ? `${API_URL}/api/kandidat/foto/${c.foto.replace('kandidat/', '')}` : "",
+    photo: c.foto ? `https://evoting-osis-backend.wasmer.app/api/kandidat/foto/${c.foto.replace('kandidat/', '')}` : "",
     visi: c.visi,
     misi: typeof c.misi === 'string' ? c.misi.split('\n').filter(Boolean) : c.misi,
     program: typeof c.proggram === 'string' ? c.proggram.split('\n').filter(Boolean) : c.proggram
@@ -83,7 +83,7 @@ function PilihPage() {
     
     try {
       // PASTIKAN URL INI MENGGUNAKAN IP KAMU, BUKAN LOCALHOST
-      const response = await fetch("${API_URL}/api/vote", {
+      const response = await fetch("https://evoting-osis-backend.wasmer.app/api/vote", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

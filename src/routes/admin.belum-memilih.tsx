@@ -17,7 +17,7 @@ function BelumPage() {
   // Ambil data langsung dari MySQL (hanya siswa yang belum memilih)
   const fetchBelumMemilih = async () => {
     try {
-      const response = await fetch("${API_URL}/api/admin/belum-memilih");
+      const response = await fetch("https://evoting-osis-backend.wasmer.app/api/admin/belum-memilih");
       const data = await response.json();
       if (data.status === 'success') {
         setRows(data.data);

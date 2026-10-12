@@ -24,7 +24,7 @@ export function Dashboard() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await fetch("${API_URL}/api/admin/dashboard-stats");
+        const response = await fetch("https://evoting-osis-backend.wasmer.app/api/admin/dashboard-stats");
         const data = await response.json();
         if (data.status === 'success') {
           setStats(data);
