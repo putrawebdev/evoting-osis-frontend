@@ -31,7 +31,7 @@ function PengaturanPage() {
     const id = toast.loading("Menghasilkan laporan Excel dari database...");
     
     // Mengarahkan browser untuk men-download file CSV dari Laravel
-    window.location.href = "https://evoting-osis-backend-production.up.railway.app/api/admin/export/excel";
+    window.location.href = "http://localhost:8000/api/admin/export/excel";
     
     setTimeout(() => {
       toast.success("File Excel berhasil diunduh!", { id });
@@ -40,7 +40,7 @@ function PengaturanPage() {
 
   const exportPDF = () => {
     const id = toast.loading("Menyiapkan dokumen PDF...");
-    window.location.href = "https://evoting-osis-backend-production.up.railway.app/api/admin/export/pdf";
+    window.location.href = "http://localhost:8000/api/admin/export/pdf";
     setTimeout(() => toast.success("File PDF berhasil diunduh!", { id }), 1500);
   };
 

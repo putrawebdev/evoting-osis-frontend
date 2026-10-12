@@ -23,7 +23,7 @@ function PemilihPage() {
   // Ambil data langsung dari MySQL
   const fetchPemilih = async () => {
     try {
-      const response = await fetch("https://evoting-osis-backend-production.up.railway.app/api/admin/pemilih");
+      const response = await fetch("http://localhost:8000/api/admin/pemilih");
       const data = await response.json();
       if (data.status === 'success') {
         setStudents(data.data);
@@ -53,7 +53,7 @@ function PemilihPage() {
     if (!f.nama.trim()) { toast.error("Nama wajib diisi."); return; }
     
     try {
-      const response = await fetch("https://evoting-osis-backend-production.up.railway.app/api/admin/pemilih", {
+      const response = await fetch("http://localhost:8000/api/admin/pemilih", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(f)
@@ -82,7 +82,7 @@ function PemilihPage() {
     formData.append("file", file);
 
     try {
-      const response = await fetch("https://evoting-osis-backend-production.up.railway.app/api/admin/pemilih/import", {
+      const response = await fetch("http://localhost:8000/api/admin/pemilih/import", {
         method: "POST",
         body: formData, // Ingat: Jangan set Content-Type manual saat pakai FormData
       });

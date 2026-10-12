@@ -29,7 +29,7 @@ export function LoginPage() {
     setLoading(true);
 
     try {
-      const response = await fetch("https://evoting-osis-backend-production.up.railway.app/api/login", {
+      const response = await fetch("http://localhost:8000/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -83,15 +83,15 @@ export function LoginPage() {
         <section className="mt-4 rounded-2xl border border-emerald-100 bg-emerald-50/60 p-3">
           <h2 className="text-sm font-bold text-slate-800">Cara memulai pemilihan</h2>
           <ol className="mt-2 grid gap-2 text-xs sm:grid-cols-2">
-            <li className="flex items-start gap-2 rounded-xl bg-white p-2.5 shadow-sm"><span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-primary font-bold text-white">1</span><span><strong className="block text-slate-800">Masukkan NISN</strong><span className="text-slate-600">Gunakan NISN yang terdaftar.</span></span></li>
+            <li className="flex items-start gap-2 rounded-xl bg-white p-2.5 shadow-sm"><span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-primary font-bold text-white">1</span><span><strong className="block text-slate-800">Masukkan NIS</strong><span className="text-slate-600">Gunakan NIS yang terdaftar.</span></span></li>
             <li className="flex items-start gap-2 rounded-xl bg-white p-2.5 shadow-sm"><span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-primary font-bold text-white">2</span><span><strong className="block text-slate-800">Mulai memilih</strong><span className="text-slate-600">Tekan lanjut untuk masuk bilik suara.</span></span></li>
           </ol>
         </section>
 
         <form onSubmit={submit} className="mt-5 space-y-3 rounded-2xl border border-emerald-100 bg-emerald-50/60 p-4">
           <div>
-            <label htmlFor="nisn" className="mb-2 block text-sm font-semibold text-slate-800">NISN</label>
-            <Input id="nisn" inputMode="numeric" maxLength={10} value={nisn} placeholder="Masukkan NISN 10 digit"
+            <label htmlFor="nisn" className="mb-2 block text-sm font-semibold text-slate-800">NIS</label>
+            <Input id="nisn" inputMode="numeric" maxLength={10} value={nisn} placeholder="Masukkan NIS 9 digit"
               onChange={(e) => { setNisn(e.target.value.replace(/\D/g, "")); setError(null); }}
               className="h-12 rounded-xl border-emerald-200 bg-emerald-50/40 text-base text-slate-800 placeholder:text-slate-400" aria-invalid={!!error} />
           </div>

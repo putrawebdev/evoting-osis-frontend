@@ -43,19 +43,19 @@ function PilihPage() {
 
     const fetchKandidat = async () => {
       try {
-        const response = await fetch("https://evoting-osis-backend-production.up.railway.app/api/kandidat");
+        const response = await fetch("http://localhost:8000/api/kandidat");
         const data = await response.json();
         
         const formattedCandidates = data.data.map((c: any) => ({
-            id: String(c.id),
-            number: c.no_paslon,
-            ketua: c.nama_ketua,
-            wakil: c.nama_wakil,
-            photo: `https://evoting-osis-backend-production.up.railway.app/storage/${c.foto}`,
-            visi: c.visi,
-            misi: typeof c.misi === 'string' ? c.misi.split('\n').filter(Boolean) : c.misi,
-            program: typeof c.proggram === 'string' ? c.proggram.split('\n').filter(Boolean) : c.proggram
-        }));
+    id: String(c.id),
+    number: c.no_paslon,
+    ketua: c.nama_ketua,
+    wakil: c.nama_wakil,
+    photo: c.foto ? `http://localhost:8000/api/kandidat/foto/${c.foto.replace('kandidat/', '')}` : "",
+    visi: c.visi,
+    misi: typeof c.misi === 'string' ? c.misi.split('\n').filter(Boolean) : c.misi,
+    program: typeof c.proggram === 'string' ? c.proggram.split('\n').filter(Boolean) : c.proggram
+}));
 
         setCandidates(formattedCandidates);
       } catch (error) {
@@ -82,7 +82,7 @@ function PilihPage() {
     
     try {
       // PASTIKAN URL INI MENGGUNAKAN IP KAMU, BUKAN LOCALHOST
-      const response = await fetch("https://evoting-osis-backend-production.up.railway.app/api/vote", {
+      const response = await fetch("http://localhost:8000/api/vote", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -145,9 +145,13 @@ function PilihPage() {
               }}
               className="group h-full cursor-pointer overflow-hidden rounded-2xl border bg-card shadow-card transition-shadow hover:shadow-elegant focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring [perspective:1200px]">
               <motion.div className="grid h-full" animate={{ rotateY: flippedCandidateIds.has(c.id) ? 180 : 0 }} transition={{ duration: 0.65, ease: "easeInOut" }} style={{ transformStyle: "preserve-3d" }}>
-                <div className="flex h-[26rem] flex-col [grid-area:1/1] [backface-visibility:hidden] sm:h-[calc(32rem_+_2px)]">
+                <div className="flex h-[40rem] flex-col [grid-area:1/1] [backface-visibility:hidden] sm:h-[calc(32rem_+_2px)]">
                   <div className="relative aspect-[4/4] overflow-hidden bg-muted">
-                    <img src={c.photo} alt={`${c.ketua} dan ${c.wakil}`} width={816} height={1000} loading="lazy" className="h-full w-full object-cover object-[center_20%] transition-transform duration-500 group-hover:scale-105" />
+                    <img 
+                      src={c.photo} 
+                      alt={c.ketua}
+                      className="h-full w-full object-cover bg-muted" 
+                    />
                     <span className="absolute left-4 top-4 rounded-md bg-card/95 px-3 py-1.5 text-xs font-bold text-foreground shadow-card">Paslon {String(c.number).padStart(2, "0")}</span>
                     <span className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-md bg-card/95 px-3 py-1.5 text-xs font-semibold text-primary shadow-card">
                       <MousePointerClick className="h-3.5 w-3.5" /> Lihat detail
@@ -165,7 +169,7 @@ function PilihPage() {
                   </div>
                 </div>
                 <div className="[grid-area:1/1] [backface-visibility:hidden] [transform:rotateY(180deg)]">
-                  <div className="flex h-[26rem] flex-col p-4 sm:h-[calc(32rem_+_2px)] sm:p-5">
+                  <div className="flex h-[40rem] flex-col p-4 sm:h-[calc(32rem_+_2px)] sm:p-5">
                     <div className="border-b pb-4">
                       <p className="text-xs font-semibold text-accent">VISI, MISI & PROGRAM</p>
                       <h2 className="mt-2 text-lg font-bold leading-snug">{c.ketua} & {c.wakil}</h2>

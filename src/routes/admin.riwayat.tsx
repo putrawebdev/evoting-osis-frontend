@@ -21,7 +21,7 @@ function RiwayatPage() {
   // Mengambil data riwayat dari MySQL
   const fetchRiwayat = async () => {
     try {
-      const response = await fetch("https://evoting-osis-backend-production.up.railway.app/api/admin/riwayat");
+      const response = await fetch("http://localhost:8000/api/admin/riwayat");
       const data = await response.json();
       if (data.status === 'success') {
         setHistory(data.data);

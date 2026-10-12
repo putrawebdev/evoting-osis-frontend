@@ -27,7 +27,7 @@ function KandidatPage() {
 
   const fetchKandidat = async () => {
     try {
-      const res = await fetch("https://evoting-osis-backend-production.up.railway.app/api/admin/kandidat");
+      const res = await fetch("http://localhost:8000/api/admin/kandidat");
       const data = await res.json();
       setCandidates(data.data);
     } catch (err) {
@@ -42,7 +42,7 @@ function KandidatPage() {
     setF(c === "new" ? { ...empty } : {
       ketua: c.nama_ketua, wakil: c.nama_wakil, visi: c.visi, 
       misi: c.misi, program: c.proggram, 
-      photoPreview: c.foto ? `https://evoting-osis-backend-production.up.railway.app/storage/${c.foto}` : "", photoFile: null
+      photoPreview: c.foto ? `http://localhost:8000/api/kandidat/foto/${c.foto.replace('kandidat/', '')}` : "", photoFile: null
     });
   };
 
@@ -59,8 +59,8 @@ function KandidatPage() {
 
     try {
       const url = edit === "new" 
-        ? "https://evoting-osis-backend-production.up.railway.app/api/admin/kandidat" 
-        : `https://evoting-osis-backend-production.up.railway.app/api/admin/kandidat/${edit.id}`;
+        ? "http://localhost:8000/api/admin/kandidat" 
+        : `http://localhost:8000/api/admin/kandidat/${edit.id}`;
         
       const res = await fetch(url, { method: "POST", body: formData });
       
@@ -79,7 +79,7 @@ function KandidatPage() {
   const remove = async () => {
     if (!del) return;
     try {
-      const res = await fetch(`https://evoting-osis-backend-production.up.railway.app/api/admin/kandidat/${del.id}`, { method: "DELETE" });
+      const res = await fetch(`http://localhost:8000/api/admin/kandidat/${del.id}`, { method: "DELETE" });
       if (res.ok) {
         toast.success("Kandidat dihapus");
         setDel(null);
@@ -98,7 +98,11 @@ function KandidatPage() {
         {candidates.map((c) => (
           <div key={c.id} className={`${card} overflow-hidden`}>
             <div className="relative aspect-[4/3]">
-              <img src={c.foto ? `https://evoting-osis-backend-production.up.railway.app/storage/${c.foto}` : ""} alt={c.nama_ketua} className="h-full w-full object-cover bg-muted" />
+              <img 
+                src={c.foto ? `http://localhost:8000/api/kandidat/foto/${c.foto.replace('kandidat/', '')}` : ""} 
+                alt={c.nama_ketua} 
+                className="h-full w-full object-cover bg-muted" 
+              />
               <span className="absolute left-3 top-3 grid h-10 w-10 place-items-center rounded-xl bg-gradient-hero font-extrabold text-primary-foreground">{c.no_paslon}</span>
             </div>
             <div className="p-5">
