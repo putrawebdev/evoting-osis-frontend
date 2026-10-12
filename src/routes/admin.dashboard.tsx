@@ -23,7 +23,7 @@ export function Dashboard() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/admin/dashboard-stats");
+        const response = await fetch("https://evoting-osis-backend-production.up.railway.app/api/admin/dashboard-stats");
         const data = await response.json();
         if (data.status === 'success') {
           setStats(data);
