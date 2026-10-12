@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PageHeader, Pill, card, selectCls } from "@/components/shared";
-
+import { API_URL } from "@/lib/api";
 export const Route = createFileRoute("/admin/riwayat")({
   component: RiwayatPage,
 });
@@ -21,7 +21,7 @@ function RiwayatPage() {
   // Mengambil data riwayat dari MySQL
   const fetchRiwayat = async () => {
     try {
-      const response = await fetch("http://localhost:8000/api/admin/riwayat");
+      const response = await fetch("${API_URL}/api/admin/riwayat");
       const data = await response.json();
       if (data.status === 'success') {
         setHistory(data.data);

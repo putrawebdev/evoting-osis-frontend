@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid, Cell } from "recharts";
 import { CheckCircle2, UserX, Users, UsersRound } from "lucide-react";
 import { MetricCard, PageHeader, card } from "@/components/shared";
+import { API_URL } from "@/lib/api";
 
 export const Route = createFileRoute("/admin/dashboard")({
   component: Dashboard,
@@ -23,7 +24,7 @@ export function Dashboard() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/admin/dashboard-stats");
+        const response = await fetch("${API_URL}/api/admin/dashboard-stats");
         const data = await response.json();
         if (data.status === 'success') {
           setStats(data);

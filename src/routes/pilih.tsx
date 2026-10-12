@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Logo } from "@/components/shared";
 import { castVote, setState, useStore, type Candidate } from "@/lib/store";
+import { API_URL } from "@/lib/api";
 
 export const Route = createFileRoute("/pilih")({
   head: () => ({
@@ -43,7 +44,7 @@ function PilihPage() {
 
     const fetchKandidat = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/kandidat");
+        const response = await fetch("${API_URL}/api/kandidat");
         const data = await response.json();
         
         const formattedCandidates = data.data.map((c: any) => ({
@@ -51,7 +52,7 @@ function PilihPage() {
     number: c.no_paslon,
     ketua: c.nama_ketua,
     wakil: c.nama_wakil,
-    photo: c.foto ? `http://localhost:8000/api/kandidat/foto/${c.foto.replace('kandidat/', '')}` : "",
+    photo: c.foto ? `${API_URL}/api/kandidat/foto/${c.foto.replace('kandidat/', '')}` : "",
     visi: c.visi,
     misi: typeof c.misi === 'string' ? c.misi.split('\n').filter(Boolean) : c.misi,
     program: typeof c.proggram === 'string' ? c.proggram.split('\n').filter(Boolean) : c.proggram
@@ -82,7 +83,7 @@ function PilihPage() {
     
     try {
       // PASTIKAN URL INI MENGGUNAKAN IP KAMU, BUKAN LOCALHOST
-      const response = await fetch("http://localhost:8000/api/vote", {
+      const response = await fetch("${API_URL}/api/vote", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

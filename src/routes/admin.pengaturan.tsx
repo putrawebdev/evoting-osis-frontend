@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { PageHeader, StatusBadge, card } from "@/components/shared";
 import { addHistory, getState, setState, type ElectionStatus } from "@/lib/store";
 import { cn } from "@/lib/utils";
+import { API_URL } from "@/lib/api";
 
 export const Route = createFileRoute("/admin/pengaturan")({
   component: PengaturanPage,
@@ -31,7 +32,7 @@ function PengaturanPage() {
     const id = toast.loading("Menghasilkan laporan Excel dari database...");
     
     // Mengarahkan browser untuk men-download file CSV dari Laravel
-    window.location.href = "http://localhost:8000/api/admin/export/excel";
+    window.location.href = "${API_URL}/api/admin/export/excel";
     
     setTimeout(() => {
       toast.success("File Excel berhasil diunduh!", { id });
@@ -40,7 +41,7 @@ function PengaturanPage() {
 
   const exportPDF = () => {
     const id = toast.loading("Menyiapkan dokumen PDF...");
-    window.location.href = "http://localhost:8000/api/admin/export/pdf";
+    window.location.href = "${API_URL}/api/admin/export/pdf";
     setTimeout(() => toast.success("File PDF berhasil diunduh!", { id }), 1500);
   };
 

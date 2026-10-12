@@ -9,6 +9,7 @@ import {
   Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogDescription,
 } from "@/components/ui/dialog";
 import { PageHeader, card } from "@/components/shared";
+import { API_URL } from "@/lib/api";
 
 export const Route = createFileRoute("/admin/kandidat")({
   component: KandidatPage,
@@ -27,7 +28,7 @@ function KandidatPage() {
 
   const fetchKandidat = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/admin/kandidat");
+      const res = await fetch("${API_URL}/api/admin/kandidat");
       const data = await res.json();
       setCandidates(data.data);
     } catch (err) {
@@ -42,7 +43,7 @@ function KandidatPage() {
     setF(c === "new" ? { ...empty } : {
       ketua: c.nama_ketua, wakil: c.nama_wakil, visi: c.visi, 
       misi: c.misi, program: c.proggram, 
-      photoPreview: c.foto ? `http://localhost:8000/api/kandidat/foto/${c.foto.replace('kandidat/', '')}` : "", photoFile: null
+      photoPreview: c.foto ? `${API_URL}/api/kandidat/foto/${c.foto.replace('kandidat/', '')}` : "", photoFile: null
     });
   };
 
@@ -59,8 +60,8 @@ function KandidatPage() {
 
     try {
       const url = edit === "new" 
-        ? "http://localhost:8000/api/admin/kandidat" 
-        : `http://localhost:8000/api/admin/kandidat/${edit.id}`;
+        ? "${API_URL}/api/admin/kandidat" 
+        : `${API_URL}/api/admin/kandidat/${edit.id}`;
         
       const res = await fetch(url, { method: "POST", body: formData });
       
@@ -79,7 +80,7 @@ function KandidatPage() {
   const remove = async () => {
     if (!del) return;
     try {
-      const res = await fetch(`http://localhost:8000/api/admin/kandidat/${del.id}`, { method: "DELETE" });
+      const res = await fetch(`${API_URL}/api/admin/kandidat/${del.id}`, { method: "DELETE" });
       if (res.ok) {
         toast.success("Kandidat dihapus");
         setDel(null);
@@ -99,7 +100,7 @@ function KandidatPage() {
           <div key={c.id} className={`${card} overflow-hidden`}>
             <div className="relative aspect-[4/3]">
               <img 
-                src={c.foto ? `http://localhost:8000/api/kandidat/foto/${c.foto.replace('kandidat/', '')}` : ""} 
+                src={c.foto ? `${API_URL}/api/kandidat/foto/${c.foto.replace('kandidat/', '')}` : ""} 
                 alt={c.nama_ketua} 
                 className="h-full w-full object-cover bg-muted" 
               />

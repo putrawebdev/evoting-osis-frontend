@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { AlertTriangle, PartyPopper } from "lucide-react";
 import { toast } from "sonner";
 import { PageHeader, Pill, card } from "@/components/shared";
-
+import { API_URL } from "@/lib/api";
 // Hapus import useStore yang lama
 
 export const Route = createFileRoute("/admin/belum-memilih")({
@@ -17,7 +17,7 @@ function BelumPage() {
   // Ambil data langsung dari MySQL (hanya siswa yang belum memilih)
   const fetchBelumMemilih = async () => {
     try {
-      const response = await fetch("http://localhost:8000/api/admin/belum-memilih");
+      const response = await fetch("${API_URL}/api/admin/belum-memilih");
       const data = await response.json();
       if (data.status === 'success') {
         setRows(data.data);

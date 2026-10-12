@@ -10,6 +10,7 @@ import { useStore, fmtTime } from "@/lib/store";
 import loginBackground from "@/assets/mc.jpg";
 import welcomeImage from "@/assets/popup-smk-metland.png";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { API_URL } from "@/lib/api";
 
 export const Route = createFileRoute("/login")({
   component: LoginPage,
@@ -29,7 +30,7 @@ export function LoginPage() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8000/api/login", {
+      const response = await fetch("${API_URL}/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

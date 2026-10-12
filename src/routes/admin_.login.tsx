@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Logo } from "@/components/shared";
 import { addHistory, setState } from "@/lib/store";
 import loginBackground from "@/assets/mc.jpg";
+import { API_URL } from "@/lib/api";
 
 export const Route = createFileRoute("/admin_/login")({
   head: () => ({
@@ -32,7 +33,7 @@ function AdminLogin() {
     
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:8000/api/admin/login", {
+      const response = await fetch("${API_URL}/api/admin/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

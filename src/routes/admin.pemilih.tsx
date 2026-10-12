@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { PageHeader, Pill, card, selectCls } from "@/components/shared";
+import { API_URL } from "@/lib/api";
 
 export const Route = createFileRoute("/admin/pemilih")({
   component: PemilihPage,
@@ -23,7 +24,7 @@ function PemilihPage() {
   // Ambil data langsung dari MySQL
   const fetchPemilih = async () => {
     try {
-      const response = await fetch("http://localhost:8000/api/admin/pemilih");
+      const response = await fetch("${API_URL}/api/admin/pemilih");
       const data = await response.json();
       if (data.status === 'success') {
         setStudents(data.data);
@@ -53,7 +54,7 @@ function PemilihPage() {
     if (!f.nama.trim()) { toast.error("Nama wajib diisi."); return; }
     
     try {
-      const response = await fetch("http://localhost:8000/api/admin/pemilih", {
+      const response = await fetch("${API_URL}/api/admin/pemilih", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(f)
@@ -82,7 +83,7 @@ function PemilihPage() {
     formData.append("file", file);
 
     try {
-      const response = await fetch("http://localhost:8000/api/admin/pemilih/import", {
+      const response = await fetch("${API_URL}/api/admin/pemilih/import", {
         method: "POST",
         body: formData, // Ingat: Jangan set Content-Type manual saat pakai FormData
       });
