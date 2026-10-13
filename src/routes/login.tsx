@@ -92,7 +92,7 @@ export function LoginPage() {
         <form onSubmit={submit} className="mt-5 space-y-3 rounded-2xl border border-emerald-100 bg-emerald-50/60 p-4">
           <div>
             <label htmlFor="nisn" className="mb-2 block text-sm font-semibold text-slate-800">NIS</label>
-            <Input id="nisn" inputMode="text" maxLength={10} value={nisn} placeholder="Masukkan NIS 9 digit"
+            <Input id="nisn" maxLength={10} value={nisn} placeholder="Masukkan NIS 9 digit"
               onChange={(e) => { setNisn(e.target.value.replace(/\D/g, "")); setError(null); }}
               className="h-12 rounded-xl border-emerald-200 bg-emerald-50/40 text-base text-slate-800 placeholder:text-slate-400" aria-invalid={!!error} />
           </div>
