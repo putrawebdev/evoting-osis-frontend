@@ -153,8 +153,8 @@ function PilihPage() {
                       alt={c.ketua}
                       className="h-full w-full object-cover bg-muted" 
                     />
-                    <span className="absolute left-4 top-4 rounded-md bg-card/95 px-3 py-1.5 text-xs font-bold text-foreground shadow-card">Paslon {String(c.number).padStart(2, "0")}</span>
-                    <span className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-md bg-card/95 px-3 py-1.5 text-xs font-semibold text-primary shadow-card">
+                    <span className="absolute left-4 top-5 rounded-md bg-card/95 px-3 py-1.5 text-xs font-bold text-foreground shadow-card">Paslon {String(c.number).padStart(2, "0")}</span>
+                    <span className="absolute right-4 top-5 inline-flex items-center gap-1.5 rounded-md bg-card/95 px-3 py-1.5 text-xs font-semibold text-primary shadow-card">
                       <MousePointerClick className="h-3.5 w-3.5" /> Lihat detail
                     </span>
                   </div>
