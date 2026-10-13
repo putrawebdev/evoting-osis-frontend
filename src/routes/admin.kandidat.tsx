@@ -109,7 +109,7 @@ function KandidatPage() {
             <div className="p-5">
               <p className="font-bold">{c.nama_ketua} & {c.nama_wakil}</p>
               <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{c.visi}</p>
-              <p className="mt-3 text-lg"><span className="font-bold text-primary" style={{ fontSize: "25px" }}>{c.jumlah_suara}</span> suara</p>
+              <p className="mt-3 text-lg"><span className="font-bold text-primary" style={{ fontSize: "25px", color:"maroon" }}>{c.jumlah_suara}</span> suara</p>
               <div className="mt-4 flex gap-2">
                 <Button variant="outline" className="flex-1" onClick={() => open(c)}><Pencil /> Edit</Button>
                 <Button variant="outline" size="icon" className="text-destructive hover:bg-destructive-soft hover:text-destructive" onClick={() => setDel(c)}><Trash2 /></Button>
