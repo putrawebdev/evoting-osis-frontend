@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { ElectionStatus } from "@/lib/store";
-import metlandLogo from "@/assets/logo-metland-transparent.png";
+import metlandLogo from "@/assets/MPK.png";
 
 export function StatusBadge({ status }: { status: ElectionStatus }) {
   const styles: Record<ElectionStatus, string> = {
