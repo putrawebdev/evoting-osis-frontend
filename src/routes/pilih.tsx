@@ -118,7 +118,18 @@ function PilihPage() {
               <p className="text-sm font-semibold">{student.name}</p>
               <p className="text-xs text-muted-foreground">{student.kelas} · {student.nisn}</p>
             </div>
-            <Button variant="outline" size="icon" aria-label="Keluar" onClick={() => setState((s) => ({ ...s, currentNisn: null }))}><LogOut /></Button>
+            <Button 
+              variant="outline" 
+              size="icon" 
+              aria-label="Keluar" 
+              onClick={() => {
+                localStorage.removeItem("current_student"); // Menghapus sesi login
+                setState((s) => ({ ...s, currentNisn: null })); // Membersihkan state
+                navigate({ to: "/login" }); // Mengarahkan kembali ke halaman login
+              }}
+            >
+              <LogOut />
+            </Button>
           </div>
         </div>
       </header>
