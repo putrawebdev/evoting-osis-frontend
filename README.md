@@ -1,4 +1,4 @@
-# Aplikasi E-Voting OSIS
+# Aplikasi PILKAOS
 
 Aplikasi pemilihan Ketua dan Wakil Ketua OSIS berbasis React, TypeScript, TanStack Router, dan Tailwind CSS.
 

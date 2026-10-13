@@ -8,9 +8,9 @@ import { setState, startCountdown } from "@/lib/store";
 export const Route = createFileRoute("/terima-kasih")({
   head: () => ({
     meta: [
-      { title: "Terima Kasih — E-Voting OSIS" },
+      { title: "Terima Kasih — PILKAOS" },
       { name: "description", content: "Suaramu telah tercatat. Terima kasih telah berpartisipasi." },
-      { property: "og:title", content: "Terima Kasih — E-Voting OSIS" },
+      { property: "og:title", content: "Terima Kasih — PILKAOS" },
       { property: "og:description", content: "Suaramu telah tercatat." },
     ],
   }),

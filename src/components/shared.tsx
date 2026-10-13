@@ -51,7 +51,7 @@ export function Logo({ light }: { light?: boolean }) {
     <div className="flex items-center gap-2.5">
       <img src={metlandLogo} alt="Logo Metland School" width={40} height={40} className="h-10 w-10 shrink-0 object-contain drop-shadow-sm" />
       <div className="min-w-0 leading-tight">
-        <p className={cn("font-extrabold", light ? "text-sidebar-accent-foreground" : "text-foreground")}>E-Voting OSIS</p>
+        <p className={cn("font-extrabold", light ? "text-sidebar-accent-foreground" : "text-foreground")}>PILKAOS</p>
         <p className={cn("text-xs", light ? "text-sidebar-foreground/70" : "text-muted-foreground")}> SMK Metland Cibitung</p>
       </div>
     </div>
