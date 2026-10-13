@@ -29,6 +29,14 @@ export function LoginPage() {
     setError(null);
     setLoading(true);
 
+    // PENGECEKAN STATUS PEMILIHAN
+    if (election.status !== "Berlangsung") {
+      setError({ msg: `Sistem e-voting tidak aktif (Status: ${election.status}). Anda tidak dapat login.`, voted: false });
+      return;
+    }
+
+    setLoading(true);
+
     try {
       const response = await fetch("https://evoting-osis-backend.wasmer.app/api/login", {
         method: "POST",
@@ -92,9 +100,18 @@ export function LoginPage() {
         <form onSubmit={submit} className="mt-5 space-y-3 rounded-2xl border border-emerald-100 bg-emerald-50/60 p-4">
           <div>
             <label htmlFor="nisn" className="mb-2 block text-sm font-semibold text-slate-800">NIS</label>
-            <Input id="nisn" maxLength={10} value={nisn} placeholder="Masukkan NIS 9 digit"
+            <Input 
+              id="nisn" 
+              maxLength={10} 
+              value={nisn} 
+              // Ubah placeholder sesuai status
+              placeholder={election.status === "Berlangsung" ? "Masukkan NIS 9 digit" : "Pemilihan ditutup"}
               onChange={(e) => { setNisn(e.target.value.replace(/\D/g, "")); setError(null); }}
-              className="h-12 rounded-xl border-emerald-200 bg-emerald-50/40 text-base text-slate-800 placeholder:text-slate-400" aria-invalid={!!error} />
+              className="h-12 rounded-xl border-emerald-200 bg-emerald-50/40 text-base text-slate-800 placeholder:text-slate-400 disabled:opacity-50 disabled:cursor-not-allowed" 
+              aria-invalid={!!error} 
+              // TAMBAHKAN BARIS INI UNTUK DISABLE INPUT
+              disabled={election.status !== "Berlangsung"} 
+            />
           </div>
           {error && (
             <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} role="alert" className="flex gap-3 rounded-lg bg-destructive-soft p-3 text-sm text-destructive">
@@ -102,7 +119,14 @@ export function LoginPage() {
               <div><p className="font-semibold">{error.voted ? "Akses ditolak" : "Tidak dapat masuk"}</p><p>{error.msg}</p></div>
             </motion.div>
           )}
-          <Button type="submit" variant="hero" size="xl" className="w-full" disabled={loading}>
+          <Button 
+            type="submit" 
+            variant="hero" 
+            size="xl" 
+            className="w-full" 
+            // TAMBAHKAN PENGECEKAN STATUS DI SINI UNTUK DISABLE TOMBOL
+            disabled={loading || election.status !== "Berlangsung"}
+          >
             {loading ? "Memeriksa..." : <>Lanjut memilih <ArrowRight /></>}
           </Button>
         </form>
