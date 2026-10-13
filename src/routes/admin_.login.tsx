@@ -76,9 +76,9 @@ function AdminLogin() {
           </div>
           <div className="mt-6 space-y-4">
             <label className="block"><span className="mb-1.5 block text-sm font-semibold text-slate-800">Username</span>
-              <div className="relative"><User className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" /><Input id="admin-username" value={u} onChange={(e) => setU(e.target.value)} className="h-12 rounded-xl border-emerald-200 bg-emerald-50/40 pl-11 text-slate-800 placeholder:text-slate-400 focus-visible:ring-2" /></div></label>
+              <div className="relative"><User className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" /><Input id="admin-username" autoComplete="username-fake-xyz" value={u} onChange={(e) => setU(e.target.value)} className="h-12 rounded-xl border-emerald-200 bg-emerald-50/40 pl-11 text-slate-800 placeholder:text-slate-400 focus-visible:ring-2" /></div></label>
             <label className="block"><span className="mb-1.5 block text-sm font-semibold text-slate-800">Password</span>
-              <div className="relative"><Lock className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" /><Input id="admin-password" type="password" value={p} onChange={(e) => setP(e.target.value)} className="h-12 rounded-xl border-emerald-200 bg-emerald-50/40 pl-11 text-slate-800 placeholder:text-slate-400 focus-visible:ring-2" /></div></label>
+              <div className="relative"><Lock className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" /><Input id="admin-password" type="password" autoComplete="new-password" value={p} onChange={(e) => setP(e.target.value)} className="h-12 rounded-xl border-emerald-200 bg-emerald-50/40 pl-11 text-slate-800 placeholder:text-slate-400 focus-visible:ring-2" /></div></label>
             <Button type="submit" variant="hero" size="xl" className="mt-2 w-full justify-between px-5" disabled={loading}><span>{loading ? "Memproses..." : "Masuk ke dashboard"}</span><ArrowRight /></Button>
           </div>
           <Link to="/login" className="mt-6 flex items-center justify-center gap-1.5 text-sm text-slate-600 transition-colors hover:text-primary"><ArrowLeft className="h-4 w-4" /> Halaman pemilih</Link>
