@@ -8,7 +8,7 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: "Pemilihan OSIS by SMK Metland Cibitung" },
       { name: "description", content: "Pemilihan Ketua OSIS digital yang cepat, aman, dan transparan." },
-      { property: "og:title", content: "Pemilihan OSIS — SMK Metland Cibitung" },
+      { property: "og:title", content: "Pemilihan OSIS — SMPN 5 Cibitung" },
       { property: "og:description", content: "Pemilihan Ketua OSIS digital yang cepat, aman, dan transparan." },
     ],
   }),
