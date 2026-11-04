@@ -140,7 +140,7 @@ function PilihPage() {
           <h1 className="mt-1 text-2xl font-extrabold tracking-tight sm:text-4xl">{electionName}</h1>
           <p className="mt-2 text-sm text-muted-foreground sm:text-base">Pilih salah satu pasangan calon. Pilihan tidak dapat diubah.</p>
         </div>
-        <div className="mx-auto grid max-w-3xl grid-cols-1 gap-6 sm:grid-cols-2">
+        <div className="mx-auto grid max-w-4xl grid-cols-1 gap-6 sm:grid-cols-3">
           {candidates.map((c, i) => (
             <motion.article key={c.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}
               role="group" aria-label={`Paslon ${c.number}: ${c.ketua} dan ${c.wakil}`} tabIndex={0}
